@@ -203,6 +203,16 @@ Route::group(['prefix' => 'admin'], function () {
 			'uses' => 'GameController@getAdminGame',
 			'as' => 'admin.games.game'
 		]);
+		
+		Route::get('edit-game/{id}', [
+			'uses' => 'GameController@getAdminEditGame',
+			'as' => 'admin.games.edit-game'
+		]);
+		
+		Route::post('update-game', [
+			'uses' => 'GameController@gameAdminUpdate',
+			'as' => 'admin.games.update-game'
+		]);
 		/*
 		Route::get('player-count/{id}', [
 			'uses' => 'GameController@getAdminGameTournamentAwardSet',

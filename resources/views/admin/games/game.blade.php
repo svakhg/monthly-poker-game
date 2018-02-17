@@ -7,6 +7,7 @@
 			<div class="row">
 				<div class="col-12">
 					<h2>{{ $game->gameType->name . ' ' . $game->meet->date }}</h2>
+					<p><a href="{{ route('admin.games.edit-game', ['id' => $game->id]) }}">Edit game settings</a></p>
 					<p><a href="{{ route('admin.games.did-not-play', ['id' => $game->id]) }}">Record absentee scores</a></p>
 					<p><a href="{{ route('admin.games.record-results', ['id' => $game->id]) }}">Record tournament result</a></p>
 					<p><a href="{{ route('admin.games.remove-results', ['id' => $game->id]) }}">Reset scores</a></p>

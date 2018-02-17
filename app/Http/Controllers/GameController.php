@@ -34,6 +34,35 @@ class GameController extends Controller
 		return view('admin.games.add-results', ['members' => $members]);
 	}
 	*/
+	
+	public function getAdminEditGame($id)
+	{
+		$game = Game::find($id);
+		$meet = $game->meet;
+		$gameTypes = GameType::all();
+		$gameWeights = GameWeight::all();
+		$gameBuyIns = GameBuyIn::all();
+		return view('admin.games.edit-game', ['meet' => $meet, 'game' => $game, 'gameTypes' => $gameTypes, 'gameWeights' => $gameWeights, 'gameBuyIns' => $gameBuyIns]);
+	}
+	
+	public function gameAdminUpdate(Request $request)
+	{
+		$this->validate($request, [
+			'game_type' => 'required',
+			'game_weight' => 'required',
+			'game_buy_in' => 'required',
+			'game_id' => 'required'
+		]);
+		$game = Game::find($request->input('game_id'));
+		$gameDate = $game->meet->date;
+		$game->gameType()->associate($request->input('game_type'));
+		$game->gameWeight()->associate($request->input('game_weight'));
+		$game->gameBuyIn()->associate($request->input('game_buy_in'));
+		$game->save();
+		
+		return redirect()->route('admin.meets.index')->with('info', $gameDate . ' ' . $game->gameType->name . ' settings updated');
+	}
+	
 	public function getAdminGameTournamentAwardSet($id)
 	{
 		$game = Game::find($id);
