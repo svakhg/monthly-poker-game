@@ -5,15 +5,14 @@
 		<div class="container">
 			@if(Session::has('info'))
 				<div class="row">
-					<div class="col-9 col-sm-9">
+					<div class="col-12">
 						<p class="alert alert-info">{{ Session::get('info') }}</p>
 					</div>
 				</div>
 			@endif
 			<div class="row">
-				<div class="col-9 col-sm-9">
-					<table class="table">
-						<caption>Schedule <span class="label label-primary">normal</span> <span class="label label-warning">big game</span> <span class="label label-danger">main event</span></caption>
+				<div class="col-12">
+					<table class="table table-sm">
 						<tr>
 							<th>Date</th>
 							<th>Host</th>
@@ -36,31 +35,23 @@
 								@if($game->meet_id)
 									@if($meet->id === $game->meet_id)
 										@if($game->gameWeight->name === "light")
-											<a href="{{ route('admin.games.game', ['id' => $game->id]) }}">
-												<span class="label label-primary">{{ $game->gameType->name }}</span>
-											</a>
+											<a class="badge badge-primary" href="{{ route('admin.games.game', ['id' => $game->id]) }}">{{ $game->gameType->name }}</a>
 										@elseif($game->gameWeight->name === "medium")
-											<a href="{{ route('admin.games.game', ['id' => $game->id]) }}">
-												<span class="label label-warning">{{ $game->gameType->name }}</span>
-											</a>
+											<a class="badge badge-warning" href="{{ route('admin.games.game', ['id' => $game->id]) }}">{{ $game->gameType->name }}</a>
 										@else
-											<a href="{{ route('admin.games.game', ['id' => $game->id]) }}">
-												<span class="label label-danger">{{ $game->gameType->name }}</span>
-											</a>
+											<a class="badge badge-danger" href="{{ route('admin.games.game', ['id' => $game->id]) }}">{{ $game->gameType->name }}</a>
 										@endif
 									@endif
 								@endif
 							@endforeach
 							</td>
-							<td><a href="{{ route('admin.meets.edit', ['id' => $meet->id]) }}">Edit/Update Host</a></td>
-							<td><a href="{{ route('admin.meets.add-games', ['id' => $meet->id]) }}">Add games</a></td>
+							<td><a href="{{ route('admin.meets.edit', ['id' => $meet->id]) }}">Edit/Set Host</a></td>
+							<td><a href="{{ route('admin.meets.add-games', ['id' => $meet->id]) }}">Add game</a></td>
 						</tr>
 						@endforeach
 						
 					</table>
 					<a href="{{ route('admin.meets.create') }}">Add date to schedule</a>
-				</div>
-				<div class="col-3 col-sm-3">
 				</div>
 			</div>
 		</div>

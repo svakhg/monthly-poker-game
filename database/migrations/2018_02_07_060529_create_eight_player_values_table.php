@@ -18,7 +18,6 @@ class CreateEightPlayerValuesTable extends Migration
             $table->timestamps();
 			$table->string('finish_position');
 			$table->decimal('point_award');
-			$table->decimal('money_award');
         });
     }
 

@@ -17,6 +17,7 @@ class CreateSeasonsTable extends Migration
             $table->increments('id');
             $table->timestamps();
 			$table->integer('year');
+			$table->integer('drop_count');
         });
     }
 

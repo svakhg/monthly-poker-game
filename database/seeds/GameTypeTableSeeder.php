@@ -28,11 +28,6 @@ class GameTypeTableSeeder extends Seeder
 		$gameType->save();
 		
 		$gameType = new App\GameType([
-			'name' => 'PLO/PLO8'
-		]);
-		$gameType->save();
-		
-		$gameType = new App\GameType([
 			'name' => '8-Game'
 		]);
 		$gameType->save();
@@ -43,22 +38,12 @@ class GameTypeTableSeeder extends Seeder
 		$gameType->save();
 		
 		$gameType = new App\GameType([
-			'name' => 'Single Draw (NL)'
+			'name' => '7 Card Stud'
 		]);
 		$gameType->save();
 		
 		$gameType = new App\GameType([
-			'name' => 'Stud'
-		]);
-		$gameType->save();
-		
-		$gameType = new App\GameType([
-			'name' => 'Triple Draw (limit)'
-		]);
-		$gameType->save();
-		
-		$gameType = new App\GameType([
-			'name' => 'Badugi'
+			'name' => '2-7 Triple Draw'
 		]);
 		$gameType->save();
 				

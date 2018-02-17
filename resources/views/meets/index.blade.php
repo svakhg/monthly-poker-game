@@ -4,27 +4,9 @@
 	<section>
 		<div class="container">
 			<div class="row">
-				<div class="col-8 col-sm-8">
+				<div class="col-8">
 					<h2>{{ $currentSeason->year }} Season Schedule</h2>
-					<form action="{{ route('meets.index') }}" method="POST">
-						<div class="form-group">
-							<select name="season_id">
-								@foreach($seasons as $season)
-									<option value="{{ $season->id }}" {{ $currentSeason->id == $season->id ? 'selected' : ' ' }}>{{ $season->year }}</option>
-								@endforeach
-							</select>
-						</div>
-						<div class="form-group">
-							<input name="_token" type="hidden" value="{{ csrf_token() }}">
-							<button class="btn btn-primary" type="submit">Refresh</button>
-						</div>
-					</form>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-8 col-sm-8">
 					<table class="table">
-						<caption>Schedule</caption>
 						<tr>
 							<th>Date</th>
 							<th>Host</th>
@@ -45,17 +27,11 @@
 								@if($game->meet_id)
 									@if($meet->id === $game->meet_id)
 										@if($game->gameWeight->name === "light")
-											<a href="{{ route('results.game', ['id' => $game->id]) }}">
-												<span class="label label-primary">{{ $game->gameType->name }}</span>
-											</a>
+											<a class="badge badge-primary" href="{{ route('results.game', ['id' => $game->id]) }}">{{ $game->gameType->name }}</a>
 										@elseif($game->gameWeight->name === "medium")
-											<a href="{{ route('results.game', ['id' => $game->id]) }}">
-												<span class="label label-warning">{{ $game->gameType->name }}</span>
-											</a>
+											<a class="badge badge-warning"href="{{ route('results.game', ['id' => $game->id]) }}">{{ $game->gameType->name }}</a>
 										@else
-											<a href="{{ route('results.game', ['id' => $game->id]) }}">
-												<span class="label label-danger">{{ $game->gameType->name }}</span>
-											</a>
+											<a class="badge badge-danger"href="{{ route('results.game', ['id' => $game->id]) }}">{{ $game->gameType->name }}</a>
 										@endif
 									@endif
 								@endif
@@ -65,7 +41,7 @@
 						@endforeach
 					</table>
 				</div>
-				<div class="col-4 col-sm-4">
+				<div class="col-4">
 				</div>
 			</div>
 		</div>

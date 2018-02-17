@@ -19,7 +19,9 @@ class CreateGamesTable extends Migration
 			$table->integer('game_type_id');
 			$table->integer('game_weight_id');
 			$table->integer('meet_id')->nullable();
+			$table->integer('game_buy_in_id')->nullable();
 			$table->integer('player_count_id')->nullable();
+			$table->decimal('prize_pool')->nullable();
         });
     }
 

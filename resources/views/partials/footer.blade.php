@@ -1,9 +1,7 @@
 <div class="container">
 	<div class="row">
-		<div class="col-12 col-sm-12">
-			<!--
-			<p>Don't @ us, you can't join.</p>
--->
+		<div class="col-12">
+			<a href="{{ route('meets.archive') }}">Season Archives</a>
 		</div>
 	</div>
 </div>

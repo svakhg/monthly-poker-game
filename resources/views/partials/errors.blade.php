@@ -1,6 +1,6 @@
 @if(count($errors->all()))
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <div class="alert alert-danger">
                 <ul>
                     @foreach($errors->all() as $error)

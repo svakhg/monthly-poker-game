@@ -13,60 +13,70 @@ class MeetTableSeeder extends Seeder
     {
 		$meet = new App\Meet([
 			'date' => '2012-02-18',
-			'season_id' => '1'
+			'season_id' => 1
 		]);
 		$meet->save();
-		/*
+		
 		$meet = new App\Meet([
-			'date' => '2018-01-20'
+			'date' => '2012-03-17',
+			'season_id' => 1
 		]);
 		$meet->save();
 		
         $meet = new App\Meet([
-			'date' => '2018-02-10'
+			'date' => '2012-04-21',
+			'season_id' => 1
 		]);
 		$meet->save();
 		
 		$meet = new App\Meet([
-			'date' => '2018-03-17'
+			'date' => '2012-05-19',
+			'season_id' => 1
 		]);
 		$meet->save();
 		
 		$meet = new App\Meet([
-			'date' => '2018-04-21'
+			'date' => '2012-06-16',
+			'season_id' => 1
 		]);
 		$meet->save();
 		
 		$meet = new App\Meet([
-			'date' => '2018-05-19'
+			'date' => '2012-07-21',
+			'season_id' => 1
 		]);
 		$meet->save();
 		
 		$meet = new App\Meet([
-			'date' => '2018-06-16'
+			'date' => '2012-08-18',
+			'season_id' => 1
 		]);
 		$meet->save();
 		
 		$meet = new App\Meet([
-			'date' => '2018-07-21'
+			'date' => '2012-09-15',
+			'season_id' => 1
 		]);
 		$meet->save();
 		
 		$meet = new App\Meet([
-			'date' => '2018-08-18'
+			'date' => '2012-10-20',
+			'season_id' => 1
 		]);
 		$meet->save();
 		
 		$meet = new App\Meet([
-			'date' => '2018-09-15'
+			'date' => '2012-11-17',
+			'season_id' => 1
 		]);
 		$meet->save();
 		
 		$meet = new App\Meet([
-			'date' => '2018-10-20'
+			'date' => '2012-12-08',
+			'season_id' => 1
 		]);
 		$meet->save();
-		
+		/*
 		$meet = new App\Meet([
 			'date' => '2018-11-17'
 		]);

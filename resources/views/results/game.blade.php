@@ -5,9 +5,9 @@
 		<div class="container">
 			@include('partials.errors')
 			<div class="row">
-				<div class="col-12 col-sm-12">
+				<div class="col-8">
 					<h2>Tournament Results for {{ $game->gameType->name . ' ' . $game->meet->date }}</h2>
-					<table class="table">
+					<table class="table table-sm">
 						<caption></caption>
 						<tr>
 							<th>Player</th>

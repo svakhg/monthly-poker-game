@@ -103,7 +103,7 @@ class TournamentAwardSetTableSeeder extends Seeder
 			'did_not_play_money_award' => '0.00'
 		]);
 		$tournamentAwardSet->save();
-		
+		/*
 		$tournamentAwardSet = new App\TournamentAwardSet([
 			'first_finish_position' => '1st',
 			'first_point_award' => '80.00',
@@ -142,7 +142,7 @@ class TournamentAwardSetTableSeeder extends Seeder
 			'did_not_play_money_award' => '0.00'
 		]);
 		$tournamentAwardSet->save();
-		
+		*/
 		$tournamentAwardSet = new App\TournamentAwardSet([
 			'first_finish_position' => '1st',
 			'first_point_award' => '85.00',

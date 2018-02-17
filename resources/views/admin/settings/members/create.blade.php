@@ -5,7 +5,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12 col-sm-12">
-					<form action="{{ route('admin.members.create') }}" method="post">
+					<form action="{{ route('admin.settings.members.create') }}" method="post">
 						<div class="form-row">
 							<div class="form-group col-12 col-sm-12">
 								<label for="first_name">First Name</label>

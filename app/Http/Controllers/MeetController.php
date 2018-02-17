@@ -7,6 +7,7 @@ use App\Member;
 use App\Game;
 use App\GameType;
 use App\GameWeight;
+use App\GameBuyIn;
 use App\Season;
 use Illuminate\Http\Request;
 
@@ -14,14 +15,37 @@ class MeetController extends Controller
 {
     public function getIndex() 
 	{	
-		$seasons = $this->getSeasons();
-		$currentSeason = $this->getCurrentSeason();
+		$currentSeason = Season::orderBy('id', 'DESC')->first();
 		$meets = Meet::where('season_id', $currentSeason->id)->get();
-		$games = Game::all();
+		$meetGameIds = Meet::where('season_id', $currentSeason->id)->pluck('id')->all();
+		$games = Game::whereIn('meet_id', $meetGameIds)->get();
 		
-		return view('meets.index', ['seasons' => $seasons, 'currentSeason' => $currentSeason, 'meets' => $meets, 'games' => $games,  ]);
+		return view('meets.index', [/*'seasons' => $seasons,*/ 'currentSeason' => $currentSeason, 'meets' => $meets, 'games' => $games ]);
 	}
 	
+	public function getArchiveIndex()
+	{
+		$seasons = Season::orderBy('id', 'DESC')->get();
+		$currentSeason = Season::orderBy('id', 'DESC')->first();
+		$meets = Meet::all();
+		$games = Game::all();
+		
+		return view('meets.archive', ['seasons' => $seasons, 'currentSeason' => $currentSeason, 'meets' => $meets, 'games' => $games]);
+	}
+	
+	public function getArchiveSeason(Request $request)
+	{
+		$this->validate($request, [
+			'season_id' => 'required',
+		]);
+		
+		$seasons = Season::orderBy('id', 'DESC')->get();
+		$currentSeason = Season::where('id', $request->input('season_id'))->first();
+		$meets = Meet::where('season_id', $request->input('season_id'))->get();
+		$games = Game::all();
+		return view('meets.archive', ['seasons' => $seasons, 'currentSeason' => $currentSeason, 'meets' => $meets, 'games' => $games]);
+	}
+	/*
 	public function getYearIndex(Request $request)
 	{
 		$this->validate($request, [
@@ -34,7 +58,7 @@ class MeetController extends Controller
 		$games = Game::all();
 		return view('meets.index', ['seasons' => $seasons, 'currentSeason' => $currentSeason, 'meets' => $meets, 'games' => $games]);
 	}
-	
+	*/
 	public function getMeet($id)
 	{
 		$meet = Meet::find($id);
@@ -50,7 +74,8 @@ class MeetController extends Controller
 	
 	public function getAdminCreate()
 	{
-		return view('admin.meets.create');
+		$seasons = Season::orderBy('id', 'DESC')->get();
+		return view('admin.meets.create', ['seasons' => $seasons]);
 	}
 	
 	public function getAdminEdit($id)
@@ -64,11 +89,12 @@ class MeetController extends Controller
 	{
 		$this->validate($request, [
 			'date' => 'required',
+			'season_id' => 'required'
 		]);
 				
-		$meet = new Meet([
-			'date' => $request->input('date'),
-		]);
+		$meet = new Meet();
+		$meet->date = $request->input('date');
+		$meet->season()->associate($request->input('season_id'));
 		
 		$meet->save();
 		
@@ -95,8 +121,9 @@ class MeetController extends Controller
 	{	
 		$gameTypes = GameType::all();
 		$gameWeights = GameWeight::all();
+		$gameBuyIns = GameBuyIn::where('active', 1)->get();
 		$meet = Meet::find($id);
-		return view('admin.meets.add-games', ['meet' => $meet, 'gameTypes' => $gameTypes, 'gameWeights' => $gameWeights]);
+		return view('admin.meets.add-games', ['meet' => $meet, 'gameTypes' => $gameTypes, 'gameWeights' => $gameWeights, 'gameBuyIns' => $gameBuyIns]);
 	}
 	
 	public function meetAdminUpdateGame(Request $request)
@@ -104,12 +131,14 @@ class MeetController extends Controller
 		$this->validate($request, [
 			'game_type' => 'required',
 			'game_weight' => 'required',
+			'game_buy_in' => 'required',
 			'meet_id' => 'required'
 		]);
 		
 		$game = new Game();
 		$game->gameType()->associate($request->input('game_type'));
-		$game->gameWeight()->associate($request->input('game_weight'));		
+		$game->gameWeight()->associate($request->input('game_weight'));
+		$game->gameBuyIn()->associate($request->input('game_buy_in'));
 		$game->meet()->associate($request->input('meet_id'));
 		$game->save();
 		
@@ -122,26 +151,5 @@ class MeetController extends Controller
 		return $seasons;
 	}
 	
-	private function getCurrentSeason()
-	{
-		$yearNow = date('Y');
-		$season = Season::where('year', $yearNow)->first();
-		return $season;
-		/*
-		$monthNow = date('m');
-		$dayNow = date('d');
-		$yearNext = $yearNow + 1;
-		
-		if ($monthNow === '01' && $dayNow < 22) {
-			$yearLast = $yearNow - 1;
-			$seasonYear = $yearLast;
-			$from = $yearLast . '-02-01';
-			$to = $yearNow . '01-31';
-		} else {
-			$seasonYear = $yearNow;
-			$from = $yearNow . '-02-01';
-			$to = $yearNext . '-01-31';
-		}
-		*/
-	}
+
 }

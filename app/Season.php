@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Season extends Model
 {
-    protected $fillable = ['year'];
+    protected $fillable = ['year', 'drop_count'];
 	
 	public function meets()
 	{

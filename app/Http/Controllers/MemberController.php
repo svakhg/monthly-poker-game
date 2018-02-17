@@ -17,7 +17,7 @@ class MemberController extends Controller
 	public function getAdminIndex() 
 	{
 		$members = Member::all();
-		return view('admin.members.index', ['members' => $members]);
+		return view('admin.settings.members.index', ['members' => $members]);
 	}
 	
 	public function getMember($id)
@@ -28,13 +28,13 @@ class MemberController extends Controller
 	
 	public function getAdminCreate()
 	{
-		return view('admin.members.create');
+		return view('admin.settings.members.create');
 	}
 	
 	public function getAdminEdit($id)
 	{	
 		$member = Member::find($id);
-		return view('admin.members.edit', ['member' => $member, 'memberId' => $id]);
+		return view('admin.settings.members.edit', ['member' => $member, 'memberId' => $id]);
 	}
 	
     public function memberAdminCreate(Request $request)
@@ -52,7 +52,7 @@ class MemberController extends Controller
 		
 		$member->save();
 		
-		return redirect()->route('admin.members.index')->with('info', 'Added member.');		
+		return redirect()->route('admin.settings.members.index')->with('info', 'Added member.');		
 	}
 	
 	public function memberAdminUpdate(Request $request)
@@ -65,9 +65,14 @@ class MemberController extends Controller
 		$member = Member::find($request->input('id'));
 		$member->first_name = $request->input('first_name');
 		$member->last_name = $request->input('last_name');
+		if ($request->input('active')) {
+			$member->active = 1;
+		} else {
+			$member->active = 0;
+		}
 		$member->save();
 							   
-		return redirect()->route('admin.members.index')->with('info', 'Updated member.');		
+		return redirect()->route('admin.settings.members.index')->with('info', 'Updated member.');		
 	}														  
 															  
 }

@@ -13,19 +13,23 @@ class GameWeightTableSeeder extends Seeder
     {
         $gameWeight = new App\GameWeight([
 			'name' => 'light',
-			'multiplier' => '1.0'
+			'point_multiplier' => '1.0',
+			'money_multiplier' => '1.0'
 		]);
 		$gameWeight->save();
 		
 		$gameWeight = new App\GameWeight([
 			'name' => 'medium',
-			'multiplier' => '1.25'
+			'point_multiplier' => '1.25',
+			'money_multiplier' => '2.00'
+			
 		]);
 		$gameWeight->save();
 		
 		$gameWeight = new App\GameWeight([
 			'name' => 'heavy',
-			'multiplier' => '1.50'
+			'point_multiplier' => '1.50',
+			'money_multiplier' => '2.50'
 		]);
 		$gameWeight->save();
     }

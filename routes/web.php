@@ -38,6 +38,16 @@ Route::group(['prefix' => 'meets'], function () {
 		'as' => 'meets.index'
 	]);
 	
+	Route::get('archive', [
+		'uses' => 'MeetController@getArchiveIndex',
+		'as' => 'meets.archive'
+	]);
+	
+	Route::post('archive', [
+		'uses' => 'MeetController@getArchiveSeason',
+		'as' => 'meets.archive'
+	]);
+	
 	Route::post('/', [
 		'uses' => 'MeetController@getYearIndex',
 		'as' => 'meets.index'
@@ -50,11 +60,20 @@ Route::group(['prefix' => 'meets'], function () {
 	
 });
 
+Route::group(['prefix' => 'player-of-the-year'], function () {
+	
+	Route::get('/', [
+		'uses' => 'TournamentResultSetController@getPlayerOfTheYearIndex',
+		'as' => 'player-of-the-year.index'
+	]);
+	
+});
+
 // Games
 Route::group(['prefix' => 'results'], function () {
 	
 	Route::get('game/{id}', [
-		'uses' => 'TournamentResultSetController@getGame',
+		'uses' => 'TournamentResultSetController@getGameResults',
 		'as' => 'results.game'
 	]);
 	/*
@@ -77,32 +96,60 @@ Route::group(['prefix' => 'admin'], function () {
 		return view('admin.index');
 	})->name('admin.index');
 		
-	Route::group(['prefix' => 'members'], function() {
+	Route::group(['prefix' => 'settings'], function() {
 		
-		Route::get('/', [
-			'uses' => 'MemberController@getAdminIndex',
-			'as' => 'admin.members.index'
+		Route::get('/', function() {
+			return view('admin.settings.index');
+		})->name('admin.settings.index');
+		
+		Route::get('game-type', [
+			'uses' => 'GameTypeController@getIndex',
+			'as' => 'admin.settings.game-type'
 		]);
+		
+		Route::post('game-type', [
+			'uses' => 'GameTypeController@updateGameType',
+			'as' => 'admin.settings.update-game-type'
+		]);
+		
+		Route::get('game-buy-in', [
+			'uses' => 'GameBuyInController@getIndex',
+			'as' => 'admin.settings.game-buy-in'
+		]);
+		
+		Route::post('game-buy-in', [
+			'uses' => 'GameBuyInController@updateGameBuyIn',
+			'as' => 'admin.settings.update-game-buy-in'
+		]);
+		
+		Route::group(['prefix' => 'members'], function() {
+		
+			Route::get('/', [
+				'uses' => 'MemberController@getAdminIndex',
+				'as' => 'admin.settings.members.index'
+			]);
 
-		Route::get('add', [
-			'uses' => 'MemberController@getAdminCreate',
-			'as' => 'admin.members.create'
-		]);
+			Route::get('add', [
+				'uses' => 'MemberController@getAdminCreate',
+				'as' => 'admin.settings.members.create'
+			]);
 
-		Route::post('add', [
-			'uses' => 'MemberController@memberAdminCreate',
-			'as' => 'admin.members.create'
-		]);
+			Route::post('add', [
+				'uses' => 'MemberController@memberAdminCreate',
+				'as' => 'admin.settings.members.create'
+			]);
 
-		Route::get('edit/{id}', [
-			'uses' => 'MemberController@getAdminEdit',
-			'as' => 'admin.members.edit'
-		]);
+			Route::get('edit/{id}', [
+				'uses' => 'MemberController@getAdminEdit',
+				'as' => 'admin.settings.members.edit'
+			]);
 
-		Route::post('edit', [
-			'uses' => 'MemberController@memberAdminUpdate',
-			'as' => 'admin.members.update'
-		]);
+			Route::post('edit', [
+				'uses' => 'MemberController@memberAdminUpdate',
+				'as' => 'admin.settings.members.update'
+			]);
+
+		});
 		
 	});
 	
@@ -147,11 +194,16 @@ Route::group(['prefix' => 'admin'], function () {
 	
 	Route::group(['prefix' => 'games'], function() {
 		
+		Route::get('/', [
+			'uses' => 'GameController@getIndex',
+			'as' => 'admin.games.index'
+		]);
+		
 		Route::get('game/{id}', [
 			'uses' => 'GameController@getAdminGame',
 			'as' => 'admin.games.game'
 		]);
-		
+		/*
 		Route::get('player-count/{id}', [
 			'uses' => 'GameController@getAdminGameTournamentAwardSet',
 			'as' => 'admin.games.edit-player-count'
@@ -161,7 +213,7 @@ Route::group(['prefix' => 'admin'], function () {
 			'uses' => 'GameController@gameTournamentAwardSetAdminUpdate',
 			'as' => 'admin.games.update-player-count'
 		]);
-		
+		*/
 		Route::get('did-not-play/{id}', [
 			'uses' => 'GameController@getAdminSetDidNotPlay',
 			'as' => 'admin.games.did-not-play'
@@ -180,6 +232,16 @@ Route::group(['prefix' => 'admin'], function () {
 		Route::post('record-results', [
 			'uses' => 'GameController@gameRecordResultsAdminUpdate',
 			'as' => 'admin.games.update-record-results'
+		]);
+		
+		Route::get('remove-results/{id}', [
+			'uses' => 'GameController@getAdminGameRemoveResults',
+			'as' => 'admin.games.remove-results'
+		]);
+		
+		Route::post('remove-results', [
+			'uses' => 'GameController@gameRemoveResultsAdminUpdate',
+			'as' => 'admin.games.remove-results-update'
 		]);
 		
 		/*

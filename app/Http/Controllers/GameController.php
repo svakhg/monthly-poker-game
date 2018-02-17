@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Game;
 use App\GameType;
 use App\GameWeight;
+use App\GameBuyIn;
 use App\TournamentResultSet;
 use App\Member;
 use App\TournamentAwardSet;
@@ -13,6 +14,13 @@ use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
+	
+	public function getIndex()
+	{
+		$gameTypes = GameType::all();
+		$gameBuyIns = GameBuyIn::all();
+		return view('admin.games.index', ['gameTypes' => $gameTypes, 'gameBuyIns' => $gameBuyIns]);
+	}
 	
 	public function getAdminGame($id)
 	{
@@ -50,7 +58,7 @@ class GameController extends Controller
 	{
 		$game = Game::find($id);
 		$members = Member::where('active', '1')->get();
-		$tournamentValues = $game->tournamentAwardSet;
+		// $tournamentValues = $game->tournamentAwardSet;
 		
 		return view('admin.games.did-not-play', ['game' => $game, 'members' => $members]);
 	}
@@ -89,6 +97,7 @@ class GameController extends Controller
 		$seasonPlayerCount = Member::where('active', 1)->count();
 		$absenteeCount = TournamentResultSet::where('game_id', $game->id)->where('finish_position', 'DNP')->count();
 		$gamePlayerCount = $seasonPlayerCount - $absenteeCount;
+		$game->prize_pool = $gamePlayerCount * $game->gameBuyIn->amount;
 		$game->playerCount()->associate($gamePlayerCount);
 		$game->save();
 		
@@ -115,9 +124,11 @@ class GameController extends Controller
 		]);
 		
 		$game = Game::find($request->input('game_id'));
+		$pointMultiplier = $game->gameWeight->point_multiplier;
+		$moneyMultiplier = $game->gameWeight->money_multiplier;
 		$awardsTable = $game->playerCount->values_table;
 		//$awards = $awardsTable::all();
-		$acceptableKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'];
+		$acceptableKeys = range('1', $game->player_count_id);
 		$input = $request->all();
 		
 		foreach($input as $key => $value) {
@@ -128,15 +139,53 @@ class GameController extends Controller
 				
 				$award = $awardsTable::where('id', $key)->first();
 				$tournamentResultSet->finish_position = $award->finish_position;
-				$tournamentResultSet->point_award = $award->point_award;
-				$tournamentResultSet->money_award = $award->money_award;
-				
+				$tournamentResultSet->point_award = $award->point_award * $pointMultiplier;
+				if ($game->player_count_id > 8) {
+					if ($key == 3) {
+						$tournamentResultSet->money_award = round(($game->prize_pool * .20) / 5) * 5;
+					} else if ($key == 2) {
+						$tournamentResultSet->money_award = round(($game->prize_pool * .30) / 5) * 5; 
+					} else if ($key == 1) {
+						$tournamentResultSet->money_award = round(($game->prize_pool * .50) / 5) * 5; 
+					} else {
+						$tournamentResultSet->money_award = 0.00;
+					}
+				} else {
+					if ($key == 2) {
+						$tournamentResultSet->money_award = round(($game->prize_pool * .35) / 5) * 5;
+					} else if ($key == 1) {
+						$tournamentResultSet->money_award = round(($game->prize_pool * .65) / 5) * 5;
+					} else {
+						$tournamentResultSet->money_award = 0.00;
+					}
+				}
 				$tournamentResultSet->save();
 			}
 		}
 		
-		return redirect()->route('admin.games.game', ['id' => $request->input('game_id')])->with('info', 'Results saved');
+		return redirect()->route('admin.meets.index')->with('info', 'Results saved for ' . $game->gameType->name . ' ' . $game->meet->date);
 	}
+	
+	public function getAdminGameRemoveResults($id)
+	{
+		$game = Game::find($id);
+		$tournamentResultSets = TournamentResultSet::where('game_id', $id)->orderBy('point_award', 'DESC')->get();
+		return view('admin.games.remove-results', ['game' => $game, 'results' => $tournamentResultSets]);
+	}
+	
+	public function gameRemoveResultsAdminUpdate(Request $request)
+	{
+		$game = Game::find($request->input('game_id'));
+		
+		$this->validate($request, [
+			'game_id' => 'required'
+		]);
+		
+		$tournamentResultSets = TournamentResultSet::where('game_id', $request->input('game_id'))->delete();
+		
+		return redirect()->route('admin.meets.index')->with('info', 'Results deleted for ' . $game->gameType->name . ' ' . $game->meet->date);
+	}
+	
 	/*
 	private function getAwardsTable($playerCount)
 	{

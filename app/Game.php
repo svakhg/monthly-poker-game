@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
 {
-    protected $fillable = ['game_type_id', 'game_weight_id', 'meet_id', 'player_count_id'];
+    protected $fillable = ['game_type_id', 'game_weight_id', 'meet_id', 'game_buy_in_id', 'prize_pool', 'player_count_id'];
 	
 	public function gameType()
 	{
@@ -18,16 +18,21 @@ class Game extends Model
 		return $this->belongsTo('App\GameWeight');
 	}
 	
-	public function playerCount()
-	{
-		return $this->belongsTo('App\PlayerCount');
-	}
-
 	public function meet()
 	{
 		return $this->belongsTo('App\Meet');
 	}
 	
+	public function gameBuyIn()
+	{
+		return $this->belongsTo('App\GameBuyIn');
+	}
+	
+	public function playerCount()
+	{
+		return $this->belongsTo('App\PlayerCount');
+	}
+
 	public function tournamentResultSets()
 	{
 		return $this->hasMany('App\TournamentResultSet');

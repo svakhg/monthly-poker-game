@@ -12,7 +12,8 @@
 						
 						<a href="{{ route('members.index') }}">Members</a>
 -->
-						<a href="{{ route('meets.index') }}">Schedule</a>
+						<p><a href="{{ route('meets.index') }}">Schedule</a></p>
+						<p><a href="{{ route('player-of-the-year.index') }}">Player of the year</a></p>
 					</div>
 				</div>
 			</div>

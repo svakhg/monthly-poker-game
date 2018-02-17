@@ -17,7 +17,8 @@ class CreateGameWeightsTable extends Migration
             $table->increments('id');
             $table->timestamps();
 			$table->string('name');
-			$table->decimal('multiplier');
+			$table->decimal('point_multiplier');
+			$table->decimal('money_multiplier');
         });
     }
 

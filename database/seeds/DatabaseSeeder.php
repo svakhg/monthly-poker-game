@@ -17,9 +17,19 @@ class DatabaseSeeder extends Seeder
 		$this->call(MeetTableSeeder::class);
 		$this->call(GameTypeTableSeeder::class);
 		$this->call(GameWeightTableSeeder::class);
+		$this->call(GameBuyInTableSeeder::class);
 		$this->call(GameTableSeeder::class);
-		$this->call(TournamentAwardSetTableSeeder::class);
+		// $this->call(TournamentAwardSetTableSeeder::class);
 		$this->call(PlayerCountTableSeeder::class);
+		$this->call(FivePlayerValueTableSeeder::class);
+		$this->call(SixPlayerValueTableSeeder::class);
+		$this->call(SevenPlayerValueTableSeeder::class);
 		$this->call(EightPlayerValueTableSeeder::class);
+		$this->call(NinePlayerValueTableSeeder::class);
+		$this->call(TenPlayerValueTableSeeder::class);
+		$this->call(ElevenPlayerValueTableSeeder::class);
+		$this->call(TwelvePlayerValueTableSeeder::class);
+		$this->call(ThirteenPlayerValueTableSeeder::class);
+		$this->call(FourteenPlayerValueTableSeeder::class);
     }
 }
