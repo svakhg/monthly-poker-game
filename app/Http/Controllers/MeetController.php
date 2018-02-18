@@ -9,6 +9,7 @@ use App\GameType;
 use App\GameWeight;
 use App\GameBuyIn;
 use App\Season;
+use App\TournamentResultSet;
 use Illuminate\Http\Request;
 
 class MeetController extends Controller
@@ -67,9 +68,13 @@ class MeetController extends Controller
 	
 	public function getAdminIndex()
 	{
-		$meets = Meet::all();
-		$games = Game::all();
-		return view('admin.meets.index', ['meets' => $meets, 'games' => $games]);
+		$seasons = Season::orderBy('id', 'DESC')->get();
+		$currentSeason = $seasons->first();
+		
+		$meets = Meet::where('season_id', $currentSeason->id)->get();
+		$games = Game::whereIn('meet_id', $meets)->get();
+		$tournamentResults = TournamentResultSet::whereIn('game_id', $games)->get();
+		return view('admin.meets.index', ['currentSeason' => $currentSeason, 'meets' => $meets, 'games' => $games, 'tournamentResults' => $tournamentResults]);
 	}
 	
 	public function getAdminCreate()
