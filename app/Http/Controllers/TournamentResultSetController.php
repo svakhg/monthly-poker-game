@@ -60,7 +60,7 @@ class TournamentResultSetController extends Controller
 		//$seasonMembers->values()->all();
 		//$seasonPlayers = TournamentResultSet::select('member_id')->where($game->meet->season->id, 1)->distinct()->get();
 		foreach ($seasonMembersUnique as $seasonPlayer) {
-			$pointAwardsDesc = TournamentResultSet::where('member_id', $seasonPlayer)->orderBy('point_award', 'DESC')->get();
+			$pointAwardsDesc = TournamentResultSet::whereIn('game_id', $seasonGames)->where('member_id', $seasonPlayer)->orderBy('point_award', 'DESC')->get();
 			$totalPoints = $pointAwardsDesc->sum('point_award');
 			$totalPointsAfterDrops = $pointAwardsDesc->slice(0, -$seasonDrops)->sum('point_award');
 			//$totalPoints = TournamentResultSet::where('member_id', $seasonPlayer)->sum('point_award');
