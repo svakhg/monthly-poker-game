@@ -66,6 +66,16 @@ Route::group(['prefix' => 'player-of-the-year'], function () {
 		'uses' => 'TournamentResultSetController@getPlayerOfTheYearIndex',
 		'as' => 'player-of-the-year.index'
 	]);
+	/*
+	Route::get('season', [
+		'uses' => 'TournamentResultSetController@getPlayerOfTheYearSeasonIndex',
+		'as' => 'player-of-the-year.archive'
+	]);
+	*/
+	Route::post('/', [
+		'uses' => 'TournamentResultSetController@getPlayerOfTheYearSeason',
+		'as' => 'player-of-the-year.get-season'
+	]);
 	
 });
 

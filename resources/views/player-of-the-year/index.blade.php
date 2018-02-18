@@ -13,7 +13,7 @@
 						</tr>
 						@foreach($playerPoints as $playerPoint)
 							<tr>
-								<td>{{ $playerPoint['player'] }}</a></td>
+								<td>{{ $playerPoint['player'] }}</td>
 								<td>{{ $playerPoint['poyPoints'] }}</td>
 								<td>{{ $playerPoint['totalPoints'] }}</td>
 							</tr>
@@ -21,6 +21,20 @@
 					</table>
 				</div>
 				<div class="col-4">
+					<form action="{{ route('player-of-the-year.get-season') }}" method="POST">
+						<div class="form-group">
+							<label for="season_id">View a previous seasons results</label>
+							<select class="form-control form-control-sm" name="season_id">
+								@foreach($seasons as $season)
+									<option value="{{ $season->id }}" {{ $season->id == $currentSeason->id ? 'selected' : '' }}>{{ $season->year }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="form-group">
+							<input name="_token" type="hidden" value="{{ csrf_token() }}">
+							<input class="btn btn-primary" type="submit" value="Go">
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
