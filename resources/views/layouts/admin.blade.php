@@ -13,6 +13,7 @@
 		<!-- Latest compiled and minified CSS -->
 		<link href="{{ URL::to('css/app.css') }}" rel="stylesheet">
 		<link href="{{ URL::to('css/styles.css') }}" rel="stylesheet">
+	  	<link href="{{ URL::to('open-iconic/font/css/open-iconic-bootstrap.css') }}" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,400i,700" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Karla:400,400i,700" rel="stylesheet">
 
