@@ -169,6 +169,11 @@ Route::group(['prefix' => 'admin'], function () {
 			'uses' => 'MeetController@getAdminIndex',
 			'as' => 'admin.meets.index'
 		]);
+		
+		Route::post('/', [
+			'uses' => 'MeetController@getAdminSeason',
+			'as' => 'admin.meets.get-season'
+		]);
 
 		Route::get('add', [
 			'uses' => 'MeetController@getAdminCreate',

@@ -72,9 +72,28 @@ class MeetController extends Controller
 		$currentSeason = $seasons->first();
 		
 		$meets = Meet::where('season_id', $currentSeason->id)->get();
-		$games = Game::whereIn('meet_id', $meets)->get();
-		$tournamentResults = TournamentResultSet::whereIn('game_id', $games)->get();
-		return view('admin.meets.index', ['currentSeason' => $currentSeason, 'meets' => $meets, 'games' => $games, 'tournamentResults' => $tournamentResults]);
+		$meetIds = Meet::where('season_id', $currentSeason->id)->pluck('id')->all();
+		$games = Game::whereIn('meet_id', $meetIds)->get();
+		$gameIds = Game::whereIn('meet_id', $meetIds)->pluck('id')->all();
+		$tournamentResults = TournamentResultSet::whereIn('game_id', $gameIds)->get();
+		return view('admin.meets.index', ['seasons' => $seasons, 'currentSeason' => $currentSeason, 'meets' => $meets, 'games' => $games, 'tournamentResults' => $tournamentResults]);
+	}
+	
+	public function getAdminSeason(Request $request)
+	{
+		$this->validate($request, [
+			'season_id' => 'required'
+		]);
+		
+		$seasons = Season::orderBy('id', 'DESC')->get();
+		$currentSeason = Season::find($request->input('season_id'));
+		
+		$meets = Meet::where('season_id', $currentSeason->id)->get();
+		$meetIds = Meet::where('season_id', $currentSeason->id)->pluck('id')->all();
+		$games = Game::whereIn('meet_id', $meetIds)->get();
+		$gameIds = Game::whereIn('meet_id', $meetIds)->pluck('id')->all();
+		$tournamentResults = TournamentResultSet::whereIn('game_id', $gameIds)->get();
+		return view('admin.meets.index', ['seasons' => $seasons, 'currentSeason' => $currentSeason, 'meets' => $meets, 'games' => $games, 'tournamentResults' => $tournamentResults]);
 	}
 	
 	public function getAdminCreate()

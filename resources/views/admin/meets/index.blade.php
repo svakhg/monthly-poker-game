@@ -13,6 +13,20 @@
 			<div class="row">
 				<div class="col-12">
 					<h2>{{ $currentSeason->year }} Season Schedule</h2>
+					<form action="{{ route('admin.meets.get-season') }}" method="POST">
+						<div class="form-group">
+							<label for="season_id">Go to a different season</label>
+							<select class="form-control form-control-sm" name="season_id">
+								@foreach($seasons as $season)
+									<option value="{{ $season->id }}" {{ $season->id == $currentSeason->id ? 'selected' : '' }}>{{ $season->year }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="form-group">
+							<input name="_token" type="hidden" value="{{ csrf_token() }}">
+							<input class="btn btn-primary" type="submit" value="Go">
+						</div>
+					</form>
 					<table class="table table-sm">
 						<tr>
 							<th>Date</th>
