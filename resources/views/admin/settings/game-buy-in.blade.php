@@ -8,11 +8,11 @@
 					<h2>Buy-Ins</h2>
 					<p>The following buy-ins are already available (checkmarks indicate active):</p>
 					<form action="{{ route('admin.settings.update-game-buy-in') }}" method="POST">
-						@foreach($gameBuyIns as $gameBuyIn)
+						@foreach($buyIns as $buyIn)
 							<div class="form-group">
 								<div class="form-check">
-									<input class="form-check-input" id="{{ $gameBuyIn->id }}" name="{{  $gameBuyIn->id }}" type="checkbox" value="{{ $gameBuyIn->id }}" {{ $gameBuyIn->active ? 'checked' : '' }}>
-									<label class="form-check-label" for="{{ $gameBuyIn->id }}">{{ $gameBuyIn->amount }}</label>
+									<input class="form-check-input" id="{{ $buyIn->id }}" name="{{  $buyIn->id }}" type="checkbox" value="{{ $buyIn->id }}" {{ $buyIn->active ? 'checked' : '' }}>
+									<label class="form-check-label" for="{{ $buyIn->id }}">{{ $buyIn->amount }}</label>
 								</div>
 							</div>
 						@endforeach

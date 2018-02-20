@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
 {
-    protected $fillable = ['game_type_id', 'game_weight_id', 'meet_id', 'game_buy_in_id', 'prize_pool', 'player_count_id'];
+    protected $fillable = ['game_type_id', 'game_weight_id', 'meet_id', 'buy_in_id', 'prize_pool', 'player_count_id'];
 	
 	public function gameType()
 	{
@@ -23,9 +23,9 @@ class Game extends Model
 		return $this->belongsTo('App\Meet');
 	}
 	
-	public function gameBuyIn()
+	public function buyIn()
 	{
-		return $this->belongsTo('App\GameBuyIn');
+		return $this->belongsTo('App\BuyIn');
 	}
 	
 	public function playerCount()

@@ -7,7 +7,7 @@ use App\Member;
 use App\Game;
 use App\GameType;
 use App\GameWeight;
-use App\GameBuyIn;
+use App\BuyIn;
 use App\Season;
 use App\TournamentResultSet;
 use Illuminate\Http\Request;
@@ -145,9 +145,9 @@ class MeetController extends Controller
 	{	
 		$gameTypes = GameType::all();
 		$gameWeights = GameWeight::all();
-		$gameBuyIns = GameBuyIn::where('active', 1)->get();
+		$buyIns = BuyIn::where('active', 1)->get();
 		$meet = Meet::find($id);
-		return view('admin.meets.add-games', ['meet' => $meet, 'gameTypes' => $gameTypes, 'gameWeights' => $gameWeights, 'gameBuyIns' => $gameBuyIns]);
+		return view('admin.meets.add-games', ['meet' => $meet, 'gameTypes' => $gameTypes, 'gameWeights' => $gameWeights, 'buyIns' => $buyIns]);
 	}
 	
 	public function meetAdminUpdateGame(Request $request)
@@ -155,14 +155,14 @@ class MeetController extends Controller
 		$this->validate($request, [
 			'game_type' => 'required',
 			'game_weight' => 'required',
-			'game_buy_in' => 'required',
+			'buy_in' => 'required',
 			'meet_id' => 'required'
 		]);
 		
 		$game = new Game();
 		$game->gameType()->associate($request->input('game_type'));
 		$game->gameWeight()->associate($request->input('game_weight'));
-		$game->gameBuyIn()->associate($request->input('game_buy_in'));
+		$game->buyIn()->associate($request->input('buy_in'));
 		$game->meet()->associate($request->input('meet_id'));
 		$game->save();
 		

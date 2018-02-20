@@ -123,12 +123,12 @@ Route::group(['prefix' => 'admin'], function () {
 		]);
 		
 		Route::get('game-buy-in', [
-			'uses' => 'GameBuyInController@getIndex',
+			'uses' => 'BuyInController@getIndex',
 			'as' => 'admin.settings.game-buy-in'
 		]);
 		
 		Route::post('game-buy-in', [
-			'uses' => 'GameBuyInController@updateGameBuyIn',
+			'uses' => 'BuyInController@updateBuyIn',
 			'as' => 'admin.settings.update-game-buy-in'
 		]);
 		

@@ -18,8 +18,4 @@ class TournamentResultSet extends Model
 		return $this->belongsTo('App\Member');
 	}
 	
-	public function tournamentAwardSet()
-	{
-		return $this->belongsTo('App\TournamentAwardSet');
-	}
 }

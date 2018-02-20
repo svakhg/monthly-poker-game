@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGamesTable extends Migration
+class CreateSeasonResultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateGamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('games', function (Blueprint $table) {
+        Schema::create('season_results', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-			$table->integer('game_type_id');
-			$table->integer('game_weight_id');
-			$table->integer('meet_id')->nullable();
-			$table->integer('buy_in_id')->nullable();
-			$table->integer('player_count_id')->nullable();
-			$table->decimal('prize_pool')->nullable();
+			$table->string('finish_position');
+			$table->decimal('poy_points');
+			$table->decimal('total_points');
+			$table->decimal('money_award');
+			$table->integer('member_id');
+			$table->integer('season_id');
         });
     }
 
@@ -32,6 +32,6 @@ class CreateGamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('games');
+        Schema::dropIfExists('season_results');
     }
 }

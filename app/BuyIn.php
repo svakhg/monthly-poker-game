@@ -6,10 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class BuyIn extends Model
 {
-    protected $fillable = ['buy_in'];
+    protected $fillable = ['amount'];
 	
 	public function games()
 	{
 		return $this->hasMany('App\Game');
+	}
+	
+	public function buyIns()
+	{
+		return $this->hasMany('App\Season');
 	}
 }

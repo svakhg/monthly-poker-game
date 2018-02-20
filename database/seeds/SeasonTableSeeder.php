@@ -13,19 +13,25 @@ class SeasonTableSeeder extends Seeder
     {
         $season = new App\Season([
 			'year' => '2012',
-			'drop_count' => 2
+			'drop_count' => 2,
+			'player_count_id' => 14,
+			'buy_in_id' => 7
 		]);
 		$season->save();
 		
 		$season = new App\Season([
 			'year' => '2013',
-			'drop_count' => 4
+			'drop_count' => 4,
+			'player_count_id' => 10,
+			'buy_in_id' => 7
 		]);
 		$season->save();
 		
 		$season = new App\Season([
 			'year' => '2014',
-			'drop_count' => 4
+			'drop_count' => 4,
+			'player_count_id' => 11,
+			'buy_in_id' => 7
 		]);
 		$season->save();
 		

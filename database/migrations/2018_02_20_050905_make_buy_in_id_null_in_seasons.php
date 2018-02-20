@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBuyInsTable extends Migration
+class MakeBuyInIdNullInSeasons extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateBuyInsTable extends Migration
      */
     public function up()
     {
-        Schema::create('buy_ins', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-			$table->decimal('amount');
-			$table->boolean('active')->default(true);
+        Schema::table('seasons', function (Blueprint $table) {
+            $table->integer('buy_in_id')->nullable()->change();
         });
     }
 
@@ -28,6 +25,8 @@ class CreateBuyInsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('buy_ins');
+        Schema::table('seasons', function (Blueprint $table) {
+            $table->integer('buy_in_id')->change();
+        });
     }
 }

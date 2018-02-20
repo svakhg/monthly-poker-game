@@ -31,11 +31,11 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="game_buy_in">Buy-in</label>
-							<select class="form-control form-control-sm" name="game_buy_in">
+							<label for="buy_in">Buy-in</label>
+							<select class="form-control form-control-sm" name="buy_in">
 								<option value="">Select buy-in</option>
-								@foreach($gameBuyIns as $gameBuyIn)
-									<option value="{{ $gameBuyIn->id }}">$ {{ $gameBuyIn->amount }}</option>
+								@foreach($buyIns as $buyIn)
+									<option value="{{ $buyIn->id }}">$ {{ $buyIn->amount }}</option>
 								@endforeach
 							</select>
 						</div>

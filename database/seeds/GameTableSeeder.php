@@ -15,7 +15,7 @@ class GameTableSeeder extends Seeder
 			'game_type_id' => '1',
 			'game_weight_id' => '1',
 			'meet_id' => '1',
-			'game_buy_in_id' => '1'
+			'buy_in_id' => '1'
 		]);
 		$game->save();
 		
@@ -23,7 +23,7 @@ class GameTableSeeder extends Seeder
 			'game_type_id' => '2',
 			'game_weight_id' => '1',
 			'meet_id' => '1',
-			'game_buy_in_id' => '1'
+			'buy_in_id' => '1'
 		]);
 		$game->save();
 		/*

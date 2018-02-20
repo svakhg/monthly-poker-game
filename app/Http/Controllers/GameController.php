@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Game;
 use App\GameType;
 use App\GameWeight;
-use App\GameBuyIn;
+use App\BuyIn;
 use App\TournamentResultSet;
 use App\Member;
 use App\TournamentAwardSet;
@@ -18,8 +18,8 @@ class GameController extends Controller
 	public function getIndex()
 	{
 		$gameTypes = GameType::all();
-		$gameBuyIns = GameBuyIn::all();
-		return view('admin.games.index', ['gameTypes' => $gameTypes, 'gameBuyIns' => $gameBuyIns]);
+		$buyIns = BuyIn::all();
+		return view('admin.games.index', ['gameTypes' => $gameTypes, 'buyIns' => $buyIns]);
 	}
 	
 	public function getAdminGame($id)
@@ -41,8 +41,8 @@ class GameController extends Controller
 		$meet = $game->meet;
 		$gameTypes = GameType::all();
 		$gameWeights = GameWeight::all();
-		$gameBuyIns = GameBuyIn::all();
-		return view('admin.games.edit-game', ['meet' => $meet, 'game' => $game, 'gameTypes' => $gameTypes, 'gameWeights' => $gameWeights, 'gameBuyIns' => $gameBuyIns]);
+		$buyIns = BuyIn::all();
+		return view('admin.games.edit-game', ['meet' => $meet, 'game' => $game, 'gameTypes' => $gameTypes, 'gameWeights' => $gameWeights, 'buyIns' => $buyIns]);
 	}
 	
 	public function gameAdminUpdate(Request $request)
@@ -50,14 +50,14 @@ class GameController extends Controller
 		$this->validate($request, [
 			'game_type' => 'required',
 			'game_weight' => 'required',
-			'game_buy_in' => 'required',
+			'buy_in' => 'required',
 			'game_id' => 'required'
 		]);
 		$game = Game::find($request->input('game_id'));
 		$gameDate = $game->meet->date;
 		$game->gameType()->associate($request->input('game_type'));
 		$game->gameWeight()->associate($request->input('game_weight'));
-		$game->gameBuyIn()->associate($request->input('game_buy_in'));
+		$game->buyIn()->associate($request->input('buy_in'));
 		$game->save();
 		
 		return redirect()->route('admin.meets.index')->with('info', $gameDate . ' ' . $game->gameType->name . ' settings updated');
@@ -126,7 +126,7 @@ class GameController extends Controller
 		$seasonPlayerCount = Member::where('active', 1)->count();
 		$absenteeCount = TournamentResultSet::where('game_id', $game->id)->where('finish_position', 'DNP')->count();
 		$gamePlayerCount = $seasonPlayerCount - $absenteeCount;
-		$game->prize_pool = $gamePlayerCount * $game->gameBuyIn->amount;
+		$game->prize_pool = $gamePlayerCount * $game->buyIn->amount;
 		$game->playerCount()->associate($gamePlayerCount);
 		$game->save();
 		

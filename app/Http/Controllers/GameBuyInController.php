@@ -2,40 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\GameBuyIn;
+use App\BuyIn;
 use Illuminate\Http\Request;
 
-class GameBuyInController extends Controller
+class BuyInController extends Controller
 {
     public function getIndex()
 	{
-		$gameBuyIns = GameBuyIn::all();
-		return view('admin.settings.game-buy-in', ['gameBuyIns' => $gameBuyIns]);
+		$buyIns = BuyIn::all();
+		return view('admin.settings.game-buy-in', ['buyIns' => $buyIns]);
 	}
 	
-	public function updateGameBuyIn(Request $request)
+	public function updateBuyIn(Request $request)
 	{
 		$input = $request->except('amount', '_token');
-		$gameBuyInIds = GameBuyIn::where('id', '>', 0)->pluck('id')->toArray();
+		$buyInIds = BuyIn::where('id', '>', 0)->pluck('id')->toArray();
 		
 		
-		foreach ($gameBuyInIds as $value) {
+		foreach ($buyInIds as $value) {
 			if (in_array($value, $input)) {
-				$gameBuyIn = GameBuyIn::find($value);
-				$gameBuyIn->active = true;
-				$gameBuyIn->save();
+				$buyIn = BuyIn::find($value);
+				$buyIn->active = true;
+				$buyIn->save();
 			} else {
-				$gameBuyIn = GameBuyIn::find($value);
-				$gameBuyIn->active = false;
-				$gameBuyIn->save();
+				$buyIn = BuyIn::find($value);
+				$buyIn->active = false;
+				$buyIn->save();
 			}
 		}
 		
 		if ($request->input('amount')) {
-			$gameBuyIn = new GameBuyIn([
+			$buyIn = new BuyIn([
 				'amount' => $request->input('amount')
 			]);
-			$gameBuyIn->save();
+			$buyIn->save();
 		}
 		
 		return redirect()->route('admin.settings.index')->with('info', 'Buy-ins updated');

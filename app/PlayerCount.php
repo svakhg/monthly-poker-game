@@ -12,4 +12,9 @@ class PlayerCount extends Model
 	{
 		return $this->hasMany('App\Game');
 	}
+	
+	public function seasons()
+	{
+		return $this->hasMany('App\Season');
+	}
 }

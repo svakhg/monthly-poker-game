@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
 		$this->call(MeetTableSeeder::class);
 		$this->call(GameTypeTableSeeder::class);
 		$this->call(GameWeightTableSeeder::class);
-		$this->call(GameBuyInTableSeeder::class);
+		$this->call(BuyInTableSeeder::class);
 		$this->call(GameTableSeeder::class);
 		// $this->call(TournamentAwardSetTableSeeder::class);
 		$this->call(PlayerCountTableSeeder::class);
