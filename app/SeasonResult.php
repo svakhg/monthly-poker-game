@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SeasonResult extends Model
 {
-    protected $fillable = ['finish_position', 'poy_points', 'total_points', 'money_award', 'season_id', 'member_id'];
+    protected $fillable = ['season_id', 'member_id', 'money_award'];
 	
 	public function season()
 	{

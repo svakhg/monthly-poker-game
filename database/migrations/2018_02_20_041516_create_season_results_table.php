@@ -16,12 +16,9 @@ class CreateSeasonResultsTable extends Migration
         Schema::create('season_results', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-			$table->string('finish_position');
-			$table->decimal('poy_points');
-			$table->decimal('total_points');
-			$table->decimal('money_award');
-			$table->integer('member_id');
 			$table->integer('season_id');
+			$table->integer('member_id');
+			$table->decimal('money_award');
         });
     }
 
